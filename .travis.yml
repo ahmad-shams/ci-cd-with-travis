@@ -1,0 +1,6 @@
+language: python
+python: 3.0
+install:
+  - pip install -r requirments.txt
+script:
+  - python -m pytest -v
