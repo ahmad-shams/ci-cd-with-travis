@@ -1,7 +1,7 @@
 git:
   submodules: false
   quit: true
-  depth: 3
+  depth: 1
 language: python
 cache: pip
 jobs:
