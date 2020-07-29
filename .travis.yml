@@ -16,7 +16,7 @@ jobs:
     python: 3.7
   - name: Python 3.8 dev on Xenial Linux
     python: 3.8-dev
-  - stage: "Tests in Other Platform" 
+  - stage: "Tests in Other Platform"
     name: Python 3.7.4 on macOS
     os: osx
     osx_image: xcode11.2
