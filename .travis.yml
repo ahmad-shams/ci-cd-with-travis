@@ -1,4 +1,9 @@
+git:
+  submodules: false
+  quit: true
+  depth: 3
 language: python
+cache: pip
 jobs:
   include:
   - stage: Tests in Linux
