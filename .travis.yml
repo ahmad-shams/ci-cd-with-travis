@@ -20,7 +20,7 @@ jobs:
   - name: Python 3.8 dev on Xenial Linux
     python: 3.8-dev
     script:
-    - exit 5
+    - exit 1
   - stage: Tests in Other Platforms
     name: Python 3.7.4 on macOS
     os: osx
