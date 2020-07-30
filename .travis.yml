@@ -4,9 +4,12 @@ git:
   depth: 1
 language: python
 cache: pip
+install:
+- pip3 install --upgrade pip
+- pip3 install -r requirements.txt
 jobs:
   include:
-  - stage: "Tests in Linux"
+  - stage: Tests in Linux
     name: Python 3.8.0 on Xenial Linux
     python: 3.8
   - name: Python 3.8.0 on Bionic Linux
@@ -16,7 +19,9 @@ jobs:
     python: 3.7
   - name: Python 3.8 dev on Xenial Linux
     python: 3.8-dev
-  - stage: "Tests in Other Platforms"
+    script:
+    - exit 1
+  - stage: Tests in Other Platforms
     name: Python 3.7.4 on macOS
     os: osx
     osx_image: xcode11.2
@@ -28,18 +33,23 @@ jobs:
     - choco install python --version 3.8.0
     - python -m pip install --upgrade pip
     env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-  - stage: "deploy"     
-    os: linux
-    dist: xenial
+  - stage: deploy
+    if "(branch = master) AND (type = push)"
     python: 3.8
-    script:
-      - echo "Deplying (for now)"
+    script: skip
+    install: skip    
+    deploy:
+      on:
+        branch: master
+      provider: pypi
+      user: __token__      
+      password:
+        secure: mL4/0zDHrsPkC46xujO5TlmIr+pa9F257fD3pThHYwKWuuzYuPgzakmISlYWyaNv4ShFa30z8iX78qL9fRv0afsp5i5tOAP5p7cxfXYoiNbxxOb5+zgv845G11nIUMgN/emOZReKh3X+ak9L8RdNXtyPOoFveUy31AV8tVXF3/jeH5BdZgSxqksOO6AIFeKJ2qAPq+KSaxuZSSg/05GsrH6lsYhcfYRXyITE4zdSPmzfcimVSsfmAAb33HbeNbPEIJ8B99YDY+FtVcyiOPaxh9DLlocaU1EDS+xoC01u9At8U/liPMveb6TfP/kAlU++I7iiBN9UeMSqGv7uD7uqSPAGoL91vCKoQwWm06YiYRvM/FlFscj9XkDI+ampD+6Rmx2BGLrndbdH7DU6Js4T2ujJMuu8YZH79JmSViQHis1MpUoFi9bDAJRqJnOBW8rkn+ZFKlD7zdqMVXg1mgS0AIIn0bk55K11zCCbttRHhCCgEV5CI6ORjLprnUBAPrdO+QutgnMGsCTYecFoqOlipF2PodARKABTEUrXh0w/WPFJkGBG8e9HMyzvDPHnrkRx7a6hzfR7vU2YVlwkoQ/cjNtMa4yiTi5w6sPJKcecCOnQom+/qyA9QCvLkJ5763CyxqVg73C14gkP+7lhCO1tOLe7NFFU2RUL9A0Jtf6/kZ0=
+      distribution: "sdist bdist_wheel"
+      skip_exiting: true
   allow_failures:
-    - python: 3.8-dev
-install:
-  - pip3 install --upgrade pip
-  - pip3 install -r requirements.txt 
-script:
-  - python3 -m pytest -v || python -m pytest -v  
+  - python: 3.8-dev
 
- 
+#script:
+#- python3 -m pytest -v || python -m pytest -v
+
