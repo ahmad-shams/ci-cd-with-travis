@@ -33,7 +33,7 @@ jobs:
     dist: xenial
     python: 3.8
     script:
-      - echo "Deplying (for now)
+      - echo "Deplying (for now)"
   allow_failures:
     - python: 3.8-dev
 install:
